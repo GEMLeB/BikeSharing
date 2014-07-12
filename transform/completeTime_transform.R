@@ -1,5 +1,7 @@
 ## We complete the data set with expliciting time information
 
+require(lubridate)
+
 completeTime_transform <- function(bikeData){
   bikeData$datetime <- ymd_hms(bikeData$datetime)
   bikeData$day <- as.Date(bikeData$datetime)

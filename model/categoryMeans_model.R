@@ -1,5 +1,7 @@
 ### This model splits by categories in variables and computes the mean
 
+require(plyr)
+
 categoryMeans_model <- function(historicBikeData, optL = list()){
   categoryModel <- ddply(historicBikeData, .(season, hour, workingday, year), function(splitDataSet){
     mean(splitDataSet$count)    

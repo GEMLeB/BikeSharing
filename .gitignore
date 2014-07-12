@@ -1,3 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+BikeSharing.Rproj
+main.R
+test.csv
+train.csv
