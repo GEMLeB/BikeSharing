@@ -1,4 +1,4 @@
-## We complete the data set with expliciting time information
+## Loads Kaggle and UCI data, and keeps same format for both
 
 require(lubridate)
 
