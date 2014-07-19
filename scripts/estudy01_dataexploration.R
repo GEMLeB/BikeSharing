@@ -1,3 +1,7 @@
+# Script created to check some data stuff. It is not supposed to be shared.
+# This script only provids some basic charts of the data.
+# This script is awfully coded and the author knows it.
+
 if (!'devtools' %in% installed.packages()[,1]) install.packages('devtools')
 if (!'rplot' %in% installed.packages()[,1]) install_github("rplot", "rocalabern")
 if (!'rmodel' %in% installed.packages()[,1]) install_github("rmodel", "rocalabern")
