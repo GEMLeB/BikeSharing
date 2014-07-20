@@ -3,6 +3,7 @@
 source('./general/kaggle_loss.R')
 source('./general/random_cv.R')
 source('./model/categoryMeans_model.R')
+source('./model/categoryMeans_v2_model.R')
 source('./transform/completeTime_transform.R')
 source('./transform/completeTime_v2_transform.R')
 source('./transform/loadData_transform.R')
@@ -36,9 +37,32 @@ realValues <-  datosAll$count[indAllTest]
 kaggle_loss(realValues, predictedValues)
 
 # Creating new benchmark using binsMean model (categoryMeans_mode)  ----
+
+# Original categoryMeans model
 model <- categoryMeans_model(datosTrain)
 predictedValues <- categoryMeans_predict(datosTest, model)
 realValues <-  datosAll$count[indAllTest]
 kaggle_loss(realValues, predictedValues)
 
+# Same categoryMeans model using categoryMeans_v2_model function
+model <- categoryMeans_v2_model(datosTrain)
+predictedValues <- categoryMeans_v2_predict(datosTest, model)
+realValues <-  datosAll$count[indAllTest]
+kaggle_loss(realValues, predictedValues)
+
+# Example of categoryMeans_v2_model using custom categoric variables
+model <- categoryMeans_v2_model(datosTrain, optL = list(catVariables = .(season, workingday, weather, hour)))
+predictedValues <- categoryMeans_v2_predict(datosTest, model)
+realValues <-  datosAll$count[indAllTest]
+kaggle_loss(realValues, predictedValues)
+
+# Example of categoryMeans_v2_model using custom target for different models for casual and registered
+# As you can see, we obtain the same result because summing and averaging commutes
+modelCasual <- categoryMeans_v2_model(datosTrain, optL = list(target="casual", catVariables = .(season, workingday, weather, hour)))
+modelRegist <- categoryMeans_v2_model(datosTrain, optL = list(target="registered", catVariables = .(season, workingday, weather, hour)))
+predictedValuesCasual <- categoryMeans_v2_predict(datosTest, modelCasual)
+predictedValuesRegist <- categoryMeans_v2_predict(datosTest, modelRegist)
+predictedValues <- predictedValuesCasual + predictedValuesRegist
+realValues <-  datosAll$count[indAllTest]
+kaggle_loss(realValues, predictedValues)
 
