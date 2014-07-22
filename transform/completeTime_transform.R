@@ -2,7 +2,7 @@
 
 require(lubridate)
 
-completeTime_transform <- function(bikeData){
+completeTime_transform <- function(bikeData, optL= list()){
   bikeData$datetime <- ymd_hms(bikeData$datetime)
   bikeData$day <- as.Date(bikeData$datetime)
   bikeData$hour <- hour(bikeData$datetime)
