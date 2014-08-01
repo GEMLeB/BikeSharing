@@ -4,7 +4,7 @@ require(plyr)
 
 categoryLM_model <- function(data, optL = list(target = "count", 
                                                catVariables = .(season, hour, workingday, year),
-                                               lmVariables = .(atemp, humidity)  )) 
+                                               lmVariables = .(count_lag_1, count_lag_24)  )) 
 {
         if (is.null(optL$target)) optL$target = "count"
         
@@ -44,11 +44,9 @@ categoryLinear_predict <- function(historicModel,toPredictionBikeData)
                 predictedValues[iRow] <- predict.lm(historicModel[[label]],toPredictionBikeData[iRow,])[1]
         }
         
-        predictedValues <- pmax(predictedValues , 0) #sin floor ni ceiling 0.4486037
+        predictedValues <- pmax(predictedValues , 0) 
         
-#         predictedValues <- ceiling(predictedValues) # positivos y ceiling 0.451405
-
-        predictedValues <- floor(predictedValues) # positivos y floor 0.4483334
+         predictedValues <- ceiling(predictedValues) 
 
         predictedValues
 }
